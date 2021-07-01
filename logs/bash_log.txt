@@ -1,0 +1,16 @@
+Looking in indexes: https://pypi.org/simple, https://btk-user:****@boomtrain.jfrog.io/artifactory/api/pypi/python-local/simple
+Requirement already satisfied: dgl in /home/drose/miniconda3/lib/python3.8/site-packages (0.6.1)
+Collecting torch
+  Downloading torch-1.9.0-cp38-cp38-manylinux1_x86_64.whl (831.4 MB)
+Requirement already satisfied: scipy>=1.1.0 in /home/drose/miniconda3/lib/python3.8/site-packages (from dgl) (1.7.0)
+Requirement already satisfied: requests>=2.19.0 in /home/drose/miniconda3/lib/python3.8/site-packages (from dgl) (2.24.0)
+Requirement already satisfied: numpy>=1.14.0 in /home/drose/miniconda3/lib/python3.8/site-packages (from dgl) (1.19.4)
+Requirement already satisfied: networkx>=2.1 in /home/drose/miniconda3/lib/python3.8/site-packages (from dgl) (2.5.1)
+Requirement already satisfied: typing-extensions in /home/drose/miniconda3/lib/python3.8/site-packages (from torch) (3.7.4.3)
+Requirement already satisfied: certifi>=2017.4.17 in /home/drose/miniconda3/lib/python3.8/site-packages (from requests>=2.19.0->dgl) (2021.5.30)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in /home/drose/miniconda3/lib/python3.8/site-packages (from requests>=2.19.0->dgl) (1.25.11)
+Requirement already satisfied: chardet<4,>=3.0.2 in /home/drose/miniconda3/lib/python3.8/site-packages (from requests>=2.19.0->dgl) (3.0.4)
+Requirement already satisfied: idna<3,>=2.5 in /home/drose/miniconda3/lib/python3.8/site-packages (from requests>=2.19.0->dgl) (2.10)
+Requirement already satisfied: decorator<5,>=4.3 in /home/drose/miniconda3/lib/python3.8/site-packages (from networkx>=2.1->dgl) (4.4.2)
+Installing collected packages: torch
+Successfully installed torch-1.9.0
