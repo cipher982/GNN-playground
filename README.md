@@ -282,11 +282,3 @@ print(g)
     Graph(num_nodes=232965, num_edges=114615892,
           ndata_schemes={'val_mask': Scheme(shape=(), dtype=torch.uint8), 'train_mask': Scheme(shape=(), dtype=torch.uint8), 'test_mask': Scheme(shape=(), dtype=torch.uint8), 'label': Scheme(shape=(), dtype=torch.int64), 'feat': Scheme(shape=(602,), dtype=torch.float32)}
           edata_schemes={})
-
-
-
-```python
-
-```
-
------------
