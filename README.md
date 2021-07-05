@@ -53,7 +53,7 @@ One of the most common tasks performed with GNNs. The basic idea is that we can 
 #### What is the process?
 **Message passing**: In performing the neighborhoood aggregation, we pass messages (or embeddings) between the sorrounding nodes in regards to our reference node A. This in effect causes the information embedded in the nodes and edges to began filtering through the network, where they begin to learn from their neighbors.
 
-| ![node classification_diagram](attachment:94716ef4-c896-43cb-a2f2-22e3107f72b7.png) |
+| ![node classification_diagram](https://github.com/cipher982/GNN-playground/blob/main/images/node_classification.png?raw=true) |
 |:--:| 
 | *Source: https://web.stanford.edu/class/cs224w/slides/08-GNN.pdf* |
 
@@ -61,7 +61,7 @@ One of the most common tasks performed with GNNs. The basic idea is that we can 
 1. Neighboring nodes pass their messages (embeddings) through the edge networks into the recurrent network on the refernce node.
 2. The new embedding of the reference recurrent unit is updated by applying the recurrent function on the current embedding and a summation of the edge network outputs from enighboring nodes.
 
-| ![message passing diagram](attachment:3d305f29-7cf9-467c-bcd5-b98f449cf9bd.png) |
+| ![message passing diagram](https://github.com/cipher982/GNN-playground/blob/main/images/message_passing_diagram.png?raw=true) |
 |:--:| 
 | *Source: https://medium.com/dair-ai/an-illustrated-guide-to-graph-neural-networks-d5564a551783*
 
@@ -70,7 +70,7 @@ One of the most common tasks performed with GNNs. The basic idea is that we can 
 
 Once you have performed this step a few times, we now have a set of new embeddings, different from than we began. So the nodes now have their original information, along with an aggregation of the information contained within their sorrounding nodes. We can then take this information and and send them further along other layers in a pipeline, or sum up all the embeddings to get a vector **H** that represents the whole graph.
 
-| ![graph node aggregation](attachment:4c646035-6980-4190-b5e9-5a2922d72c34.png) |
+| ![graph node aggregation](https://github.com/cipher982/GNN-playground/blob/main/images/graph_node_aggregation.png?raw=true) |
 |:--:| 
 | *Source: https://medium.com/dair-ai/an-illustrated-guide-to-graph-neural-networks-d5564a551783*
 
@@ -79,7 +79,7 @@ Once you have performed this step a few times, we now have a set of new embeddin
 ### State of each node
 Each node is represented by the state of it's neigborhood below
 
-![node math notation](attachment:fab45240-7b2c-411d-a285-19cc712477dc.png)
+![node math notation](https://github.com/cipher982/GNN-playground/blob/main/images/node_math_notation.png?raw=true)
 
 - **x_v**: The node feature
 - **x_co[v]**: Features of the edges connecting with v
@@ -91,11 +91,11 @@ Each node is represented by the state of it's neigborhood below
 ### State of aggregate nodes
 H and X denote the concatenation of all the h and x values as an iterative update process
 
-![node math notation 2](attachment:08ad6cad-d062-435c-a39c-727cf16e9de3.png)
+![node math notation 2](https://github.com/cipher982/GNN-playground/blob/main/images/node_math_notation_2.png?raw=true)
 
 ## Typical Sampling Process
 
-| ![graphSAGE diagram](attachment:a44abe53-fcc4-4116-8061-6240e276ff42.png) |
+| ![graphSAGE diagram](https://github.com/cipher982/GNN-playground/blob/main/images/graphSAGE_diagram.png?raw=true) |
 |:--:| 
 | *Source: https://web.stanford.edu/class/cs224w/slides/08-GNN.pdf* |
 
