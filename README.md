@@ -81,6 +81,7 @@ Each node is represented by the state of it's neigborhood below
 
 ![node math notation](https://github.com/cipher982/GNN-playground/blob/main/images/node_math_notation.png?raw=true)
 
+
 - **x_v**: The node feature
 - **x_co[v]**: Features of the edges connecting with v
 - **h_ne[v]**: Embeddings of the neighboring nodes of v
@@ -92,6 +93,7 @@ Each node is represented by the state of it's neigborhood below
 H and X denote the concatenation of all the h and x values as an iterative update process
 
 ![node math notation 2](https://github.com/cipher982/GNN-playground/blob/main/images/node_math_notation_2.png?raw=true)
+
 
 ## Typical Sampling Process
 
