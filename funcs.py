@@ -18,8 +18,9 @@ import torch
 from torch.nn import Linear
 from torch_geometric.nn import GCNConv
 import pytorch_lightning as pl
-from functools import cached_property
+#from functools import cached_property
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def create_dict(table, col):
     table_dict = {}
@@ -81,7 +82,7 @@ class ZetaData():
                 lambda x:urlparse(x).netloc if pd.notnull(x) else x
             )
 
-    @cached_property
+    @property
     def x(self):
         feature_enc = OneHotEncoder(handle_unknown="ignore")
         features = pd.DataFrame(
@@ -94,20 +95,20 @@ class ZetaData():
             for column in new_cols:
                 features[column] = 0
             
-        return torch.tensor(features.values, dtype=torch.float)
+        return torch.tensor(features.values, dtype=torch.float).to(device)
 
-    @cached_property
+    @property
     def edge_index(self):
         edges = connect_edges(self.df, self.column)
         return torch.tensor(
             edges[['source','target']].T.values, dtype=torch.long
-        )
+        ).to(device)
 
-    @cached_property
+    @property
     def y(self):
         label_enc = LabelEncoder()
         labels = label_enc.fit_transform(self.df[self.target])
-        return torch.tensor(labels, dtype=torch.long)
+        return torch.tensor(labels, dtype=torch.long).to(device)
     
     @property
     def train_mask(self):
@@ -119,21 +120,22 @@ class ZetaData():
 
     @property
     def num_classes(self):
-        return len(np.unique(self.y))
-    
-    @cached_property
+        #return len(np.unique(self.y))
+        return 10
+        
+    @property
     def node_count(self):
         return self.x.shape[0]
     
-    @cached_property
+    @property
     def edge_count(self):
         return self.edge_index.shape[1]
     
-    @cached_property
+    @property
     def in_channels(self):
         return self.x.shape[1]
     
-    @cached_property
+    @property
     def out_channels(self):
         return len(np.unique(self.y))
 
