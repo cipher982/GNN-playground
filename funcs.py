@@ -92,8 +92,7 @@ class ZetaData():
         
         if self.expand_x is not None:
             new_cols = [f"fake_{self.expand_x-i}" for i in range(self.expand_x - features.shape[1])][::-1]
-            for column in new_cols:
-                features[column] = 0
+            features[new_cols] = 0
             
         return torch.tensor(features.values, dtype=torch.float).to(device)
 
