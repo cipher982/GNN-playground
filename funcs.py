@@ -24,8 +24,8 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def create_dict(table, col):
     table_dict = {}
+    print(f"Create dict for {col}")
     for ix, value in enumerate(table[col]):
-        #print(value)
         if value != value:
             continue
         if value in table_dict:
@@ -48,6 +48,29 @@ def connect_edges(df, column):
     )
     return edges
 
+def create_dict_2(table, col):
+    table_dict = {}
+    for ix, value_list in enumerate(table[col]):
+        #print(f"ix:{ix}, {value_list}")
+        for value in value_list:
+            if value != value:
+                continue
+            if value in table_dict:
+                table_dict[value].append(ix)
+            else:
+                table_dict[value] = [ix]
+    return table_dict
+
+def connect_edges_2(df, column):
+    edges = []
+    lookup_dict = create_dict_2(df, column)
+    for ix, value_list in enumerate(df[column]):
+        for value in value_list:
+            if value in lookup_dict:
+                for item in lookup_dict[value]:
+                    edges.append((ix, item, column, value))
+    edges = pd.DataFrame(edges, columns=["source","target","column","value"])
+    return edges
 
 def visualize(h, color, epoch=None, loss=None):
     plt.figure(figsize=(7,7))
@@ -75,6 +98,11 @@ class ZetaData():
         
         self.df = pd.read_csv(file_path, low_memory=False)
         self.df.columns = [i.split(".")[1] for i in self.df.columns]
+
+        if "client" in self.df.columns:
+            df_before = len(self.df)
+            self.df = self.df[self.df["client"] == "sizmek"]
+            print(f"Filtering Zync for sizmek clients {df_before:,} -> {len(self.df):,}")
         
         # parse URLs
         if parse_url == True and column in ["url", "referrer"]:
@@ -108,6 +136,10 @@ class ZetaData():
         label_enc = LabelEncoder()
         labels = label_enc.fit_transform(self.df[self.target])
         return torch.tensor(labels, dtype=torch.long).to(device)
+    
+    @property
+    def new_y(self):
+        pass
     
     @property
     def train_mask(self):
