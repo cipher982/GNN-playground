@@ -20,34 +20,10 @@ from torch_geometric.nn import GCNConv
 import pytorch_lightning as pl
 #from functools import cached_property
 
+
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-#def create_dict(table, col):
-#    table_dict = {}
-#    print(f"Create dict for {col}")
-#    for ix, value in enumerate(table[col]):
-#            continue
-#        if value in table_dict:
-#            table_dict[value].append(ix)
-#        else:
-#            table_dict[value] = [ix]
-#    return table_dict
-#
-#
-#def connect_edges(df, column):
-#    edges = []
-#    lookup_dict = create_dict(df, column)
-#    for ix, value in enumerate(df[column]):
-#        if value in lookup_dict:
-#            for item in lookup_dict[value]:
-#                edges.append((ix, item, column, value))
-#    edges = pd.DataFrame(
-#        edges, 
-#        columns=['source', 'target', 'column', 'value']
-#    )
-#    return edges
-
-def create_dict_2(table, col):
+def create_dict(table, col):
     table_dict = {}
     for ix, value_list in enumerate(table[col]):
         #print(f"ix:{ix}, {value_list}")
@@ -60,14 +36,18 @@ def create_dict_2(table, col):
                 table_dict[value] = [ix]
     return table_dict
 
-def connect_edges_2(df, column):
+def connect_edges(df, column, limit=10_000_000):
     edges = []
     lookup_dict = create_dict_2(df, column)
+    return lookup_dict
     for ix, value_list in enumerate(df[column]):
         for value in value_list:
             if value in lookup_dict:
                 for item in lookup_dict[value]:
                     edges.append((ix, item, column, value))
+        if len(edges) > limit:
+            print(f"Reached edge limit of {limit:,}. User: {ix}/{len(df)}")
+            break
     edges = pd.DataFrame(edges, columns=["source","target","column","value"])
     return edges
 
