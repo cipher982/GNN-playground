@@ -20,13 +20,26 @@ from torch_geometric.nn import GCNConv
 import pytorch_lightning as pl
 #from functools import cached_property
 
-
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
+def count_edge_frequency(df, col):
+    edge_counts = {}
+    for ix, row_list in enumerate(df[col]):
+        for value in row_list:
+            if value != value:
+                continue
+            if value in edge_counts:
+                edge_counts[value] += 1
+            else:
+                edge_counts[value] = 1
+    edge_counts = pd.DataFrame(pd.Series(edge_counts)).reset_index()
+    edge_counts.columns = ["url", "count"]
+    return edge_counts
 
 def create_dict(table, col):
     table_dict = {}
     for ix, value_list in enumerate(table[col]):
-        #print(f"ix:{ix}, {value_list}")
         for value in value_list:
             if value != value:
                 continue
@@ -36,10 +49,16 @@ def create_dict(table, col):
                 table_dict[value] = [ix]
     return table_dict
 
-def connect_edges(df, column, limit=10_000_000):
+def connect_edges(df, column, blocklist, limit=10_000_000):
+    # Create lookup dictionary
+    lookup_dict = create_dict(df, column)
+    
+    # Remove URLs in blocklist
+    for url in blocklist:
+        lookup_dict.pop(url, None)
+    
+    # Create edge list
     edges = []
-    lookup_dict = create_dict_2(df, column)
-    return lookup_dict
     for ix, value_list in enumerate(df[column]):
         for value in value_list:
             if value in lookup_dict:
