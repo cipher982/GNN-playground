@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # install cuda 11
 wget https://developer.download.nvidia.com/compute/cuda/11.4.2/local_installers/cuda_11.4.2_470.57.02_linux.run
 sudo sh cuda_11.4.2_470.57.02_linux.run
@@ -5,7 +7,7 @@ sudo sh cuda_11.4.2_470.57.02_linux.run
 # Conda installs
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh
 bash ~/anaconda.sh -b -p $HOME/anaconda
-echo -e '\nexport PATH=$HOME/anaconda/bin:$PATH' >> $HOME/.bashrc && source $HOME/.bashrc
+echo -e '\nexport PATH=$HOME/anaconda/bin:$PATH' >> $HOME/.bashrc && source $HOME/.bashrc;
 conda install -y pytorch torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
 conda install -y pytorch-geometric -c rusty1s -c conda-forge
 conda install -y ipykernel pyarrow s3fs matplotlib
