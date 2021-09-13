@@ -15,7 +15,7 @@ pip install pytorch_lightning
 
 # install dgmc
 git clone https://github.com/rusty1s/deep-graph-matching-consensus.git
-cd deep-graph-matching-consensus && python setup.py install
+cd deep-graph-matching-consensus && python setup.py install && cd ..
 
 python -m ipykernel install --user --name=torch
 
