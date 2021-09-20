@@ -2,6 +2,7 @@ import torch
 from torch_geometric.data import InMemoryDataset, download_url
 import numpy as np
 import numpy as np
+import IP2Location
 import pandas as pd
 #import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -21,6 +22,24 @@ import pytorch_lightning as pl
 #from functools import cached_property
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
+def ip_to_coords(ip_list):
+    IP2LocObj = IP2Location.IP2Location()
+    IP2LocObj.open("data/IP2LOCATION-LITE-DB5.BIN")
+    
+    coord_list = []
+    for ip in ip_list:
+        result = IP2LocObj.get_all(ip)           
+        lat = result.latitude
+        lon = result.longitude
+        coord_list.append((lat, lon))
+    coord_list = pd.DataFrame(coord_list)
+    for col in coord_list.columns:
+        coord_list[col] = pd.to_numeric(coord_list[col], errors="coerce")
+    coord_count = len(coord_list) - coord_list.isna().sum()[0]
+    print(f"Located {coord_count:,}/{len(ip_list):,} coordinates")
+    return coord_list
 
 
 def count_edge_frequency(df, col):
