@@ -24,6 +24,13 @@ import pytorch_lightning as pl
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
+def replace_low_counts(data, thresh=1_000):
+    new_data = data.copy()
+    value_counts = new_data.value_counts().to_dict()
+    mapping = new_data.map(value_counts)
+    new_data[mapping < thresh] = "other"
+    return new_data
+
 def ip_to_coords(ip_list):
     IP2LocObj = IP2Location.IP2Location()
     IP2LocObj.open("data/IP2LOCATION-LITE-DB5.BIN")
